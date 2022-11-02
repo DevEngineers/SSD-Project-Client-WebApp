@@ -8,7 +8,10 @@ const Home = () => {
 
 	useEffect(() => {
 		const keycloak = new Keycloak(keycloakData);
-		keycloak.init({ onLoad: 'login-required'})
+		keycloak.init({
+				onLoad: 'login-required',
+				checkLoginIframe: false,
+			})
 			.then(authenticated => {
 				setKeycloak(keycloak);
 				setAuthenticated(authenticated);

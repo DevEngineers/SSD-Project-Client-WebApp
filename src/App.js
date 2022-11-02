@@ -7,11 +7,10 @@ import Login from './Pages/Login';
 import keycloakData from '../keycloak.json';
 
 const App = () => {
-	const keycloak = new Keycloak(keycloakData);
+	const keycloak = new Keycloak('/keycloak.json');
 
 	const initOptions = {
 		onLoad: 'login-required',
-		checkLoginIframe: false,
 	};
 
 	return (

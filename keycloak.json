@@ -2,10 +2,10 @@
 	"realm": "SSD-Project-Realm",
 	"url": "http://localhost:8080/auth/",
 	"sslRequired": "external",
-	"resource": "ssd-react-client-project",
+	"resource": "react-web-app",
 	"publicClient": true,
 	"verifyTokenAudience": true,
 	"useResourceRoleMappings": true,
 	"confidentialPort": 0,
-	"clientId": "ssd-react-client-project"
+	"clientId": "react-web-app"
 }
