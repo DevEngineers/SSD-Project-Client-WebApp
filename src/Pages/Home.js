@@ -15,13 +15,18 @@ const Home = () => {
 			.then(authenticated => {
 				setKeycloak(keycloak);
 				setAuthenticated(authenticated);
+
+				if (authenticated) {
+					localStorage.setItem('token', keycloak.token);
+				}
+	
 			});
 	}, []);
 
 	if (keycloak) {
 		if (authenticated)
 			return (
-				<div className="my-12 grid place-items-center">
+				<div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
 					<p> You are logged in.</p>
 				</div>
 			);
