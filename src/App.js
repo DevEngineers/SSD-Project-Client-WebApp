@@ -1,14 +1,24 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './Pages/Login';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import Keycloak from 'keycloak-js';
+import Home from './Pages/Home';
 
 const App = () => {
+	const keycloak = new Keycloak('/keycloak.json');
+
+	const initOptions = {
+		onLoad: 'login-required',
+	};
+
 	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<Login />} />
-			</Routes>
-		</Router>
+		<ReactKeycloakProvider authClient={keycloak} initOptions={initOptions}>
+			<Router>
+				<Routes>
+					<Route path="/" element={<Home />} />
+				</Routes>
+			</Router>
+		</ReactKeycloakProvider>
 	);
 };
 
