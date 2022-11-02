@@ -6,11 +6,13 @@
 	"repository": "https://github.com/DevEngineers/SSD-Project-Client-WebApp.git",
 	"license": "MIT",
 	"scripts": {
-		"start": "parcel index.html",
+		"start": "parcel index.html --port 3000",
 		"build": "parcel index.js",
 		"format": "prettier --write \"**/*.+(js|jsx|json|css|md)\""
 	},
 	"dependencies": {
+		"@react-keycloak/web": "^3.4.0",
+		"keycloak-js": "^20.0.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.4.2"
