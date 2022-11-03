@@ -3,8 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {ReactKeycloakProvider} from '@react-keycloak/web';
 import Keycloak from 'keycloak-js';
 import Home from './Pages/Home';
-import CreateMessage from "./Pages/Message/CreateMessage";
-import ViewMessage from "./Pages/Message/ViewMessage";
+import Message from "./Pages/Message/Message";
 
 const App = () => {
     const keycloak = new Keycloak('/keycloak.json');
@@ -18,8 +17,7 @@ const App = () => {
             <Router>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
-                    <Route path="/message" element={<CreateMessage/>}/>
-                    <Route path="/messages" element={<ViewMessage/>}/>
+                    <Route path="/message" element={<Message/>}/>
                 </Routes>
             </Router>
         </ReactKeycloakProvider>
