@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Keycloak from 'keycloak-js';
 import keycloakData from '../../keycloak.json';
+import messageService from '../Services/MessageService';
 
 const Home = () => {
 	const [keycloak, setKeycloak] = useState(null);
@@ -23,11 +24,20 @@ const Home = () => {
 			});
 	}, []);
 
+	const onClickButton = async () =>{
+		const res = await messageService.getMessages();
+		console.log(res);
+	}
+
 	if (keycloak) {
 		if (authenticated)
 			return (
 				<div className="container mx-auto bg-gray-200 rounded-xl shadow border p-8 m-10">
 					<p> You are logged in.</p>
+					<br/>
+					<button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={onClickButton}>
+						Get Messages
+					</button>
 				</div>
 			);
 		else return <div className="my-12">Unable to initiate auth!</div>;
@@ -35,7 +45,7 @@ const Home = () => {
 
 	return (
 		<>
-			<div className="my-12">Keycloak initializing in a moment...</div>
+			<div className="p-2">Redirecting to Login...</div>
 		</>
 	);
 };
