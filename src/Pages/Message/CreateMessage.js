@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import axios from "axios";
-
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 const CreateMessage = () => {
     const [name, setName] = useState('')
     const [message, setMessage] = useState('')
     const [file, setFile] = useState('')
+    const navigate = useNavigate();
 
     const handleName = (e) => {
         e.preventDefault();
@@ -38,6 +39,7 @@ const CreateMessage = () => {
             console.log(result.data)
             console.log(formData);
             alert('Success')
+            navigate('/messages');
         })
             .catch(error => {
                 alert('Service Error')
