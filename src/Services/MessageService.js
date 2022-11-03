@@ -3,7 +3,7 @@
  * Registration Number : IT19153414
  */
 
-const API_BASE_URI = 'http://localhost:5000/'
+const API_BASE_URI = 'http://localhost:5000/message/'
 
  class MessageServices{
 
@@ -11,14 +11,14 @@ const API_BASE_URI = 'http://localhost:5000/'
      *  This service function is to store messages
      */
     async storeMessage(messsgae){
-        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const bearer = 'bearer ' + localStorage.getItem('token');
         return await fetch(API_BASE_URI,{
             method:'POST',
             headers:{
               'content-Type':"application/json",
               'Authorization': bearer
             },
-            body:JSON.stringify(researchPaper)
+            body:JSON.stringify(messsgae)
         }).then(response =>{
             return response;
         }).catch(reason => {
@@ -30,7 +30,7 @@ const API_BASE_URI = 'http://localhost:5000/'
      *  This service function is to store files
      */
       async FileUploads(file){
-        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const bearer = 'bearer ' + localStorage.getItem('token');
         let form = new FormData()
         form.append('name',file.name)
         form.append('file',file)
@@ -54,14 +54,12 @@ const API_BASE_URI = 'http://localhost:5000/'
      *  This service function is to Get All messages
      */
     async getMessages(){
-        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const bearer = 'bearer ' + localStorage.getItem('token');
         return await fetch(API_BASE_URI,{
             method:'GET',
             headers:{
-              'content-Type':"application/json",
               'Authorization': bearer
             },
-            body:JSON.stringify(researchPaper)
         }).then(response =>{
             return response.json();
         }).catch(reason => {
@@ -74,11 +72,10 @@ const API_BASE_URI = 'http://localhost:5000/'
      *  This service function is to get the messages by id
      */
     async getMessageByID(id){
-        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const bearer = 'bearer ' + localStorage.getItem('token');
         return await fetch(API_BASE_URI+"/"+id,{
             method:'GET',
             headers:{
-              'content-Type':"application/json",
               'Authorization': bearer
             },
             body:JSON.stringify(researchPaper)
@@ -95,7 +92,7 @@ const API_BASE_URI = 'http://localhost:5000/'
      *  This service function is to Add to continues messages 
      */
     async updateMessages(id,message){
-        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const bearer = 'bearer ' + localStorage.getItem('token');
         return await fetch(API_BASE_URI+"/"+id,{
             method:'PUT',
             headers:{
@@ -114,7 +111,7 @@ const API_BASE_URI = 'http://localhost:5000/'
      *  This service function is to Remove stored messages
      */
     async removeMessage(id){
-        const bearer = 'Bearer ' + localStorage.getItem('token');
+        const bearer = 'bearer ' + localStorage.getItem('token');
         return await fetch(API_BASE_URI+"/"+id,{
             headers:{
                 'Authorization': bearer
