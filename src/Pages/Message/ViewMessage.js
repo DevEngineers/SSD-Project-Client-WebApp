@@ -18,7 +18,7 @@ export default function ViewMessage() {
     const removeUser = async (id) => {
         try {
             const res = await axios.delete(`${URI}/${id}`)
-            alert('Message Succesfully Deleted')
+            alert('Message Deleted Succesfully')
             console.log('Message successfully deleted.')
             window.location.reload(false);
         } catch (error) {

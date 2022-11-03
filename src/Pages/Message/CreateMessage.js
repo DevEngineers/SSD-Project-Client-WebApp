@@ -1,6 +1,17 @@
 import React, {useState} from 'react';
 import axios from "axios";
 import {Routes, Route, useNavigate} from 'react-router-dom';
+import {ToastContainer, toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+/* configuring options to display toast message */
+const options = {
+    position: toast.POSITION.TOP_CENTER,
+    hideProgressBar: true,
+    autoClose: 3000,
+    closeButton: false
+}
 
 const CreateMessage = () => {
     const [name, setName] = useState('')
@@ -16,7 +27,7 @@ const CreateMessage = () => {
         e.preventDefault();
         setMessage(e.target.value)
     }
-    const handleImage = (e) => {
+    const handleFile = (e) => {
         console.log(e.target.files)
         setFile(e.target.files[0])
     }
@@ -43,12 +54,15 @@ const CreateMessage = () => {
         })
             .catch(error => {
                 alert('Service Error')
+                toast.error("Something went wrong!! Try again.", options)
                 console.log(error)
             })
+        toast.success("Message Sended Successfully", options)
     }
 
     return (
         <div className={"w-full px-80 pt-10 h-screen"}>
+            <ToastContainer/>
             <h1 className={"py-5 text-center text-3xl font-bold"}>Staff Messenger</h1>
             <div className={"bg-white shadow-md rounded px-8 pt-6 pb-2 mb-4"}>
                 <div className={"mb-4"}>
@@ -64,18 +78,22 @@ const CreateMessage = () => {
 
                 <div className={"mb-4"}>
                     <label className={"block text-gray-700 text-sm font-bold mb-2"}> File Upload</label>
-                    <input type="file" onChange={handleImage}
+                    <input type="file" onChange={handleFile}
                            className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}/>
                     <div className={"pt-6"}>
                         <button onClick={handleSubmit}
                                 className={"bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"}>SUBMIT
                         </button>
+
                     </div>
 
                 </div>
 
             </div>
+            {/*</ToastContainer>*/}
+
         </div>
+
     );
 }
 export default CreateMessage;
