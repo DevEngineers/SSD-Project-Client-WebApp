@@ -38,7 +38,7 @@ const CreateMessage = () => {
         }).then(result => {
             console.log(result.data)
             console.log(formData);
-            alert('Success')
+            alert('Message Succesfully Created')
             navigate('/messages');
         })
             .catch(error => {

@@ -18,10 +18,13 @@ export default function ViewMessage() {
     const removeUser = async (id) => {
         try {
             const res = await axios.delete(`${URI}/${id}`)
+            alert('Message Succesfully Deleted')
             console.log('Message successfully deleted.')
+            window.location.reload(false);
         } catch (error) {
             alert(error)
         }
+
     }
     return (
         <div className="overflow-x-auto relative pt-10 px-10">
@@ -57,7 +60,7 @@ export default function ViewMessage() {
                         </td>
                         <td className="py-4 px-6 flex gap-5">
                             <button
-                                className={"text-2xl"}>
+                                className={"text-2xl text-blue-900"}>
                                 <AiFillEdit/>
                             </button>
                             <button className="text-2xl hover:bg-gray-200  text-red-500 rounded-lg"
