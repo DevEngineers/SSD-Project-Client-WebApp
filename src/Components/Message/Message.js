@@ -37,7 +37,7 @@ const Message = () => {
             .then((res) => res.json())
             .then((post) => {
                 setPost((posts) => [post, ...posts]);
-                setName('');
+                // setName('');
                 setMessage('');
                 setDate('');
                 setFile('');

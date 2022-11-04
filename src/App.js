@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {ReactKeycloakProvider} from '@react-keycloak/web';
 import Keycloak from 'keycloak-js';
 import Home from './Pages/Home';
-import Message from "./Pages/Message/Message";
+import Message from "./Components/Message/Message";
 
 const App = () => {
     const keycloak = new Keycloak('/keycloak.json');
