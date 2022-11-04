@@ -58,7 +58,7 @@ const Message = () => {
         setFile(e.target.files[0])
     }
 
-    const handleSubmit = (e) => {
+    const saveUser = (e) => {
         //call the api
         const url = 'https://jsonplaceholder.typicode.com/photos'
 
@@ -119,7 +119,7 @@ const Message = () => {
                             <input type="file" onChange={handleFile}
                                    className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}/>
                             <div className={"pt-6"}>
-                                <button onClick={handleSubmit}
+                                <button onClick={saveUser}
                                         className={"bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"}>SEND
                                 </button>
 
