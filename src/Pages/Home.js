@@ -1,42 +1,40 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Keycloak from 'keycloak-js';
 import keycloakData from '../../keycloak.json';
-import Message from "../Components/Message/Message";
+import Message from './Message';
 
 const Home = () => {
-    const [keycloak, setKeycloak] = useState(null);
-    const [authenticated, setAuthenticated] = useState(false);
+	const [keycloak, setKeycloak] = useState(null);
+	const [authenticated, setAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const keycloak = new Keycloak(keycloakData);
-        keycloak.init({
-            onLoad: 'login-required',
-            checkLoginIframe: false,
-        })
-            .then(authenticated => {
-                setKeycloak(keycloak);
-                setAuthenticated(authenticated);
+	useEffect(() => {
+		const keycloak = new Keycloak(keycloakData);
+		keycloak.init({
+				onLoad: 'login-required',
+				checkLoginIframe: false,
+			})
+			.then(authenticated => {
+				setKeycloak(keycloak);
+				setAuthenticated(authenticated);
+				if (authenticated) {
+					localStorage.setItem('token', keycloak.token);
+                    keycloak.loadUserProfile().then((user) =>{
+                        localStorage.setItem('username', user.username);
+                    })
+				}
+			});
+	}, []);
 
-                if (authenticated) {
-                    localStorage.setItem('token', keycloak.token);
-                }
+	if (keycloak) {
+		if (authenticated) return <Message />;
+		else return <div className="my-12">Unable to initiate auth!</div>;
+	}
 
-            });
-    }, []);
-
-    if (keycloak) {
-        if (authenticated)
-            return (
-                <Message/>
-            );
-        else return <div className="my-12">Unable to initiate auth!</div>;
-    }
-
-    return (
-        <>
-            <div className="my-12">Keycloak initializing in a moment...</div>
-        </>
-    );
+	return (
+		<>
+			<div className="my-12">Redirecting to Login...</div>
+		</>
+	);
 };
 
 export default Home;
