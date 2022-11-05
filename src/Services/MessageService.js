@@ -9,7 +9,7 @@ class MessageServices {
 	/**
 	 *  This service function is to store messages
 	 */
-	async storeMessage(messsgae) {
+	async storeMessage(message) {
 		const bearer = 'bearer ' + localStorage.getItem('token');
 		return await fetch(API_BASE_URI, {
 			method: 'POST',
@@ -17,7 +17,7 @@ class MessageServices {
 				'content-Type': 'application/json',
 				Authorization: bearer,
 			},
-			body: JSON.stringify(messsgae),
+			body: JSON.stringify(message),
 		})
 			.then(response => {
 				return response;
