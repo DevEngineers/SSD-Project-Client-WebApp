@@ -4,6 +4,8 @@ import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '/src/Assets/Images/clubhouse-icons.jpg';
 import headerlogo from '/src/Assets/Images/icons8-wechat-48.png';
+import MessageService from "../../Services/MessageService";
+
 
 /* configuring options to display toast message */
 const options = {
@@ -18,7 +20,49 @@ const Message = () => {
     const [message, setMessage] = useState('')
     const [date, setDate] = useState('')
     const [file, setFile] = useState('')
-    const [post, setPost] = React.useState(null);
+    const [post, setPost] = React.useState([]);
+
+
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+    const fetchData = () => {
+        MessageService.getMessages()
+            .then(post => {
+                setPost(post);
+            }).catch((err) => {
+            console.error(err);
+        });
+    }
+
+    //
+    // const handleSubmit = (event) => {
+    //     event.preventDefault();
+    //     let Message = {
+    //         message: message,
+    //         date: date,
+    //         file: file,
+    //     }
+    //
+    //     MessageService.storeMessage(Message)
+    //         .then(res => {
+    //             console.log("response : ", res);
+    //             if (res.status === 200) {
+    //                 toast.success(" Message  Sent Successfully");
+    //                 console.log(" Message  Sent Successfully");
+    //                 setTimeout(() => {
+    //                     history.push("/all");
+    //                 }, 3000);
+    //             } else {
+    //                 toast.error(Error("Something went wrong!! Try again."));
+    //             }
+    //         }).catch((err) => {
+    //         toast.error(err.message, options)
+    //         console.error(err);
+    //     });
+    //
+    // }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -49,13 +93,13 @@ const Message = () => {
             });
     };
 
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
-            .then(response => response.json())
-            .then(setPost);
-    }, []);
-
-    if (!post) return null;
+    // useEffect(() => {
+    //     fetch('https://jsonplaceholder.typicode.com/posts')
+    //         .then(response => response.json())
+    //         .then(setPost);
+    // }, []);
+    // //
+    // if (!post) return null;
 
     // const removeUser = async (id) => {
     //     const URI = "https://jsonplaceholder.typicode.com/posts";
@@ -110,7 +154,8 @@ const Message = () => {
                         {/*</div>*/}
                         <div className={"mb-6 pt-5"}>
                             <label className={"block text-gray-700 text-sm font-bold mb-2"}>Message</label>
-                            <input type="text" onChange={handleMessage} placeholder={"Write Your Message here..."}
+                            <input type="text" onChange={handleMessage}
+                                   placeholder={"Write Your Message here..."}
                                    className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}/>
                         </div>
                         <div className={"mb-6"}>
@@ -120,7 +165,8 @@ const Message = () => {
                         </div>
                         <div className={"mb-6"}>
                             <label className={"block text-gray-700 text-sm font-bold mb-2"}>Date</label>
-                            <input type="date" onChange={handleDate} placeholder={"Write Your Message here..."}
+                            <input type="date" onChange={handleDate}
+                                   placeholder={"Write Your Message here..."}
                                    className={"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"}/>
                         </div>
                         <div className={"pt-6"}>
