@@ -10,7 +10,7 @@ class MessageServices {
 	/**
 	 *  This service function is to store worker messages
 	 */
-	async storeMessage(message) {
+	async storeMessageWorker(message) {
 		const bearer = 'bearer ' + localStorage.getItem('token');
 		
 		return await fetch(API_BASE_URI + '/worker', {
