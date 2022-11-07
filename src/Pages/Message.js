@@ -31,10 +31,9 @@ const Message = () => {
 		let Message = {
 			message: message,
 			date: date,
-			file: file,
 		};
 
-		const response = await MessageService.storeMessage(Message);
+		const response = await MessageService.FileUploads(file);
 		console.log('response : ', response);
 		if (response.status === 200) {
 			toast.success(' Message  Sent Successfully');
