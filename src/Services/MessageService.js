@@ -30,6 +30,28 @@ class MessageServices {
 	}
 
 	/**
+	 *  This service function is to store Manager messages
+	 */
+	 async storeMessageManager(message) {
+		const bearer = 'bearer ' + localStorage.getItem('token');
+		
+		return await fetch(API_BASE_URI + '/manager', {
+			method: 'POST',
+			headers: {
+				'content-Type': 'application/json',
+				Authorization: bearer,
+			},
+			body: JSON.stringify(message) ,
+		})
+			.then(response => {
+				return response;
+			})
+			.catch(reason => {
+				return reason;
+			});
+	}
+
+	/**
 	 *  This service function is to store files
 	 */
 	async FileUploads(file) {
