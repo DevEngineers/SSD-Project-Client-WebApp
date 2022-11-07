@@ -12,7 +12,6 @@ class MessageServices {
 	 */
 	async storeMessageWorker(message) {
 		const bearer = 'bearer ' + localStorage.getItem('token');
-		
 		return await fetch(API_BASE_URI + '/worker', {
 			method: 'POST',
 			headers: {
@@ -34,7 +33,6 @@ class MessageServices {
 	 */
 	 async storeMessageManager(message) {
 		const bearer = 'bearer ' + localStorage.getItem('token');
-		
 		return await fetch(API_BASE_URI + '/manager', {
 			method: 'POST',
 			headers: {
@@ -56,11 +54,9 @@ class MessageServices {
 	 */
 	async FileUploads(file) {
 		const bearer = 'bearer ' + localStorage.getItem('token');
-
 		const form = new FormData();
 		form.append('name', file.name);
 		form.append('file', file);
-
 		return await fetch(API_BASE_URI + '/manager/file' , {
 			method: 'POST',
 			headers: {
