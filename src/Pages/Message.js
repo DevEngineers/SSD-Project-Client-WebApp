@@ -29,16 +29,37 @@ const Message = () => {
 	const handleSubmit = async event => {
 		event.preventDefault();
 		let Message = {
+			user: localStorage.getItem('username'),
 			message: message,
 			date: date,
+			fileLocation:''
 		};
 
-		const response = await MessageService.FileUploads(file);
-		console.log('response : ', response);
-		if (response.status === 200) {
-			toast.success(' Message  Sent Successfully');
-		} else {
-			toast.error(Error('Something went wrong!! Try again.'));
+		if(message === ''){
+			toast.warning('Message cannot be null.');
+		} else if(file === ''){
+			const res = await MessageService.storeMessageManager(Message);
+			console.log('response : ', res);
+			if (res.status === 200) {
+				toast.success(' Message  Sent Successfully');
+			} else {
+				toast.error(Error('Something went wrong!! Try again.'));
+			}
+		}else {
+			const response = await MessageService.FileUploads(file);
+			if(response.statusCode === 200){
+				Message.fileLocation = response.body;
+				console.log(Message);
+				const res = await MessageService.storeMessageManager(Message);
+				console.log('response : ', res);
+				if (res.status === 200) {
+					toast.success(' Message  Sent Successfully');
+				} else {
+					toast.error(Error('Something went wrong!! Try again.'));
+				}
+			} else {
+				toast.error(Error('Something went wrong!! Try again.'));
+			}
 		}
 	};
 
@@ -159,19 +180,19 @@ const Message = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{post.map(post => (
-										<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
-											<td className="py-4 px-6">
-												{post.message}
-											</td>
-											<td className="py-4 px-6">
-												{post.date}
-											</td>
+									{/* {post.map(post => ( */}
+										{/* <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600"> */}
+											{/* <td className="py-4 px-6"> */}
+												{/* {post.message} */}
+											{/* </td> */}
+											{/* <td className="py-4 px-6"> */}
+												{/* {post.date} */}
+											{/* </td> */}
 											{/*<td className="py-4 px-6">*/}
 											{/*    {post.file}*/}
 											{/*</td>*/}
-										</tr>
-									))}
+										{/* </tr> */}
+									{/* ))} */}
 								</tbody>
 							</table>
 						</div>
