@@ -1,9 +1,3 @@
-/**
- * @author : M.N.M Akeel && A.M Zumry
- * Registration Number : IT19153414 && IT19175126
- */
-
-
 const API_BASE_URI = 'http://localhost:5000/message';
 
 class MessageServices {
