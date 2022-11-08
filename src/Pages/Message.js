@@ -180,19 +180,19 @@ const Message = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{/* {post.map(post => ( */}
-										{/* <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600"> */}
-											{/* <td className="py-4 px-6"> */}
-												{/* {post.message} */}
-											{/* </td> */}
-											{/* <td className="py-4 px-6"> */}
-												{/* {post.date} */}
-											{/* </td> */}
+									{post.map(post => (
+										<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
+											<td className="py-4 px-6">
+												{post.message}
+											</td>
+											<td className="py-4 px-6">
+												{post.date}
+											</td>
 											{/*<td className="py-4 px-6">*/}
 											{/*    {post.file}*/}
 											{/*</td>*/}
-										{/* </tr> */}
-									{/* ))} */}
+										</tr>
+									))}
 								</tbody>
 							</table>
 						</div>
