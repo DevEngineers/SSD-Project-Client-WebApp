@@ -29,17 +29,37 @@ const Message = () => {
 	const handleSubmit = async event => {
 		event.preventDefault();
 		let Message = {
+			user: localStorage.getItem('username'),
 			message: message,
 			date: date,
-			file: file,
+			fileLocation:''
 		};
 
-		const response = await MessageService.storeMessage(Message);
-		console.log('response : ', response);
-		if (response.status === 200) {
-			toast.success(' Message  Sent Successfully');
-		} else {
-			toast.error(Error('Something went wrong!! Try again.'));
+		if(message === ''){
+			toast.warning('Message cannot be null.');
+		} else if(file === ''){
+			const res = await MessageService.storeMessageManager(Message);
+			console.log('response : ', res);
+			if (res.status === 200) {
+				toast.success(' Message  Sent Successfully');
+			} else {
+				toast.error(Error('Something went wrong!! Try again.'));
+			}
+		}else {
+			const response = await MessageService.FileUploads(file);
+			if(response.statusCode === 200){
+				Message.fileLocation = response.body;
+				console.log(Message);
+				const res = await MessageService.storeMessageManager(Message);
+				console.log('response : ', res);
+				if (res.status === 200) {
+					toast.success(' Message  Sent Successfully');
+				} else {
+					toast.error(Error('Something went wrong!! Try again.'));
+				}
+			} else {
+				toast.error(Error('Something went wrong!! Try again.'));
+			}
 		}
 	};
 
