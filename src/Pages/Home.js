@@ -73,14 +73,14 @@ const Home = () => {
 		} else if (date === '') {
 			toast.warning('Select a date!.');
 		} else {
-			if (role === 'app-worker') {
+			if (role === 'worker') {
 				const res = await MessageService.storeMessageWorker(Message);
 				if (res.status === 200) {
 					toast.success(' Message Sent Successfully');
 				} else {
 					toast.error(Error('Something went wrong!! Try again.'));
 				}
-			} else if (role === 'app-manager') {
+			} else if (role === 'manager') {
 				if (file !== '') {
 					const response = await MessageService.FileUploads(file);
 					Message.fileLocation = response.body;
