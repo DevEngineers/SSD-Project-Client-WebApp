@@ -12,7 +12,7 @@ class MessageServices {
 				'content-Type': 'application/json',
 				Authorization: bearer,
 			},
-			body: JSON.stringify(message) ,
+			body: JSON.stringify(message),
 		})
 			.then(response => {
 				return response;
@@ -25,7 +25,7 @@ class MessageServices {
 	/**
 	 *  This service function is to store Manager messages
 	 */
-	 async storeMessageManager(message) {
+	async storeMessageManager(message) {
 		const bearer = 'bearer ' + localStorage.getItem('token');
 		return await fetch(API_BASE_URI + '/manager', {
 			method: 'POST',
@@ -33,7 +33,7 @@ class MessageServices {
 				'content-Type': 'application/json',
 				Authorization: bearer,
 			},
-			body: JSON.stringify(message) ,
+			body: JSON.stringify(message),
 		})
 			.then(response => {
 				return response;
@@ -51,7 +51,7 @@ class MessageServices {
 		const form = new FormData();
 		form.append('name', file.name);
 		form.append('file', file);
-		return await fetch(API_BASE_URI + '/manager/file' , {
+		return await fetch(API_BASE_URI + '/manager/file', {
 			method: 'POST',
 			headers: {
 				Authorization: bearer,
@@ -95,7 +95,6 @@ class MessageServices {
 			headers: {
 				Authorization: bearer,
 			},
-			body: JSON.stringify(id),
 		})
 			.then(response => {
 				return response.json();
