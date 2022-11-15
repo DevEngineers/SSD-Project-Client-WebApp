@@ -65,24 +65,26 @@ const Home = () => {
 		};
 
 		if (message === '') {
-			toast.warning('Message cannot be null.');
-		} else if (file === '') {
-			const res = await MessageService.storeMessageManager(Message);
-			console.log('response : ', res);
-			if (res.status === 200) {
-				toast.success(' Message  Sent Successfully');
-			} else {
-				toast.error(Error('Something went wrong!! Try again.'));
-			}
+			toast.warning('Enter a message!.');
+		} else if (date === '') {
+			toast.warning('Select a date!.');
 		} else {
-			const response = await MessageService.FileUploads(file);
-			if (response.statusCode === 200) {
-				Message.fileLocation = response.body;
-				console.log(Message);
-				const res = await MessageService.storeMessageManager(Message);
-				console.log('response : ', res);
+			if (role === 'worker') {
+				const res = await MessageService.storeMessageWorker(Message);
 				if (res.status === 200) {
-					toast.success(' Message  Sent Successfully');
+					toast.success(' Message Sent Successfully');
+				} else {
+					toast.error(Error('Something went wrong!! Try again.'));
+				}
+			} else if (role === 'manager') {
+				if (file !== '') {
+					const response = await MessageService.FileUploads(file);
+					Message.fileLocation = response.body;
+				}
+
+				const res = await MessageService.storeMessageManager(Message);
+				if (res.status === 200) {
+					toast.success(' Message Sent Successfully');
 				} else {
 					toast.error(Error('Something went wrong!! Try again.'));
 				}
