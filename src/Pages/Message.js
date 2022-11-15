@@ -4,6 +4,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import headerlogo from '/src/Assets/Images/icons8-wechat-48.png';
 import MessageService from '../Services/MessageService';
+import CryptoService from '../Services/CryptoService';
+import FileSaver from 'file-saver';
 
 const options = {
 	position: toast.POSITION.TOP_RIGHT,
@@ -11,22 +13,67 @@ const options = {
 	autoClose: 3000,
 	closeButton: false,
 };
-
+var blobFile;
 const Message = () => {
 	const [message, setMessage] = useState('');
 	const [date, setDate] = useState('');
-	const [file, setFile] = useState('');
+	const [file, setFile] = useState([]);
 	const [post, setPost] = React.useState([]);
 
 	useEffect(() => {
 		fetchData();
 	}, []);
 
+
+	const getEncryptedFile = (uploadedFile) => {
+
+		var reader = new FileReader();
+		if(uploadedFile){
+			reader.readAsText(uploadedFile);
+			reader.onload = () => {
+				var readResult = reader.result;
+				console.log("file reading result" + readResult);
+				var cipherText = CryptoService.encryptData(readResult);
+				// var cipherFile = new Blob([cipherText], {type: "text/plain;charset=utf-8"});
+				// FileSaver.saveAs(cipherFile, "hello-world.txt");
+				var cipherFile = new File ([cipherText], "cipherFile.txt", {type:"text/plain;charset=utf-8"});
+				FileSaver.saveAs(cipherFile);
+				blobFile = cipherFile;
+				setEncryptedFile(cipherFile);
+			}
+		}
+	}
+
+	const getDecryptedFile = (uploadedFile) => {
+
+		console.log("calling handleDecrypt 2 " + uploadedFile);
+		var reader = new FileReader();
+		if(uploadedFile){ 
+			reader.readAsText(uploadedFile);
+			reader.onload = () => {
+				var readResult = reader.result;
+				console.log("file reading result" + readResult);
+				var plainText = CryptoService.decryptData(readResult);
+				var plainFile = new File ([plainText], "plainFile.txt", {type:"text/plain;charset=utf-8"});
+				FileSaver.saveAs(plainFile);
+
+				// setEncryptedFile(cipherFile);
+			}
+		}
+	}
+
 	const fetchData = async () => {
 		const data = await MessageService.getMessageByID(localStorage.getItem('username'));
 		setPost(data);
 	};
+
+	const handleDecrypt = () => {
+		console.log("calling handleDecrypt");
+		getDecryptedFile(blobFile);
+	}
+
 	const handleSubmit = async event => {
+		getEncryptedFile(file[0]);
 		event.preventDefault();
 		let Message = {
 			message: message,
@@ -53,7 +100,7 @@ const Message = () => {
 	};
 	const handleFile = e => {
 		console.log(e.target.files);
-		setFile(e.target.files[0]);
+		setFile(e.target.files);
 	};
 
 	return (
@@ -137,6 +184,15 @@ const Message = () => {
 									'bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
 								}>
 								SEND
+							</button>
+						</div>
+						<div className={'pt-6'}>
+							<button
+								onClick={handleDecrypt}
+								className={
+									'bg-gray-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline'
+								}>
+								DECRYPT TEST
 							</button>
 						</div>
 					</div>
