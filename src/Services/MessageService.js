@@ -1,23 +1,39 @@
-/**
- * @author : M.N.M Akeel
- * Registration Number : IT19153414
- */
-
-const API_BASE_URI = 'http://localhost:5000/message/';
+const API_BASE_URI = 'http://localhost:5000/message';
 
 class MessageServices {
 	/**
-	 *  This service function is to store messages
+	 *  This service function is to store worker messages
 	 */
-	async storeMessage(messsgae) {
+	async storeMessageWorker(message) {
 		const bearer = 'bearer ' + localStorage.getItem('token');
-		return await fetch(API_BASE_URI, {
+		return await fetch(API_BASE_URI + '/worker', {
 			method: 'POST',
 			headers: {
 				'content-Type': 'application/json',
 				Authorization: bearer,
 			},
-			body: JSON.stringify(messsgae),
+			body: JSON.stringify(message),
+		})
+			.then(response => {
+				return response;
+			})
+			.catch(reason => {
+				return reason;
+			});
+	}
+
+	/**
+	 *  This service function is to store Manager messages
+	 */
+	async storeMessageManager(message) {
+		const bearer = 'bearer ' + localStorage.getItem('token');
+		return await fetch(API_BASE_URI + '/manager', {
+			method: 'POST',
+			headers: {
+				'content-Type': 'application/json',
+				Authorization: bearer,
+			},
+			body: JSON.stringify(message),
 		})
 			.then(response => {
 				return response;
@@ -32,14 +48,12 @@ class MessageServices {
 	 */
 	async FileUploads(file) {
 		const bearer = 'bearer ' + localStorage.getItem('token');
-		let form = new FormData();
+		const form = new FormData();
 		form.append('name', file.name);
 		form.append('file', file);
-
-		return await fetch(API_BASE_URI + '/file', {
+		return await fetch(API_BASE_URI + '/manager/file', {
 			method: 'POST',
 			headers: {
-				'content-Type': 'application/json',
 				Authorization: bearer,
 			},
 			body: form,
@@ -81,7 +95,6 @@ class MessageServices {
 			headers: {
 				Authorization: bearer,
 			},
-			body: JSON.stringify(researchPaper),
 		})
 			.then(response => {
 				return response.json();
