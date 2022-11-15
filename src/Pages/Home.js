@@ -41,7 +41,11 @@ const Home = () => {
 					localStorage.setItem('token', keycloak.token);
 					keycloak.loadUserProfile().then(user => {
 						localStorage.setItem('username', user.username);
-						setRole(keycloak.realmAccess.roles[0]);
+						if(keycloak.realmAccess.roles.includes('app-manager')){
+							setRole('manager');
+						}else if(keycloak.realmAccess.roles.includes('app-worker')){
+							setRole('worker');
+						}
 					});
 				}
 			});
@@ -172,7 +176,7 @@ const Home = () => {
 										}
 									/>
 								</div>
-								{role === 'app-manager' ? (
+								{role === 'manager' ? (
 									<div className={'mb-6'}>
 										<label
 											className={
