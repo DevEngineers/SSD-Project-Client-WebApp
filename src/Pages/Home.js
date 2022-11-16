@@ -272,7 +272,7 @@ const Home = () => {
 			return <div className="my-12 p-10">Unable to initiate auth!</div>;
 		}
 	}
-	return <div className="my-12 p-10">Redirecting to Login...</div>;
+	return <div className="my-12 p-10">Redirecting...</div>;
 };
 
 export default Home;
