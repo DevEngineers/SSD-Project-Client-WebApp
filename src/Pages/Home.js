@@ -243,11 +243,6 @@ const Home = () => {
 													className="py-3 px-6">
 													Date
 												</th>
-												<th
-													scope="col"
-													className="py-3 px-6">
-													File
-												</th>
 											</tr>
 										</thead>
 										<tbody>
