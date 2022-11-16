@@ -245,22 +245,32 @@ const Home = () => {
 												</th>
 											</tr>
 										</thead>
-										<tbody>
-											{
-												post.map((value, key) => {
-													return(
-														<tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
-															<td className="py-4 px-6">
-																{value.message}
-															</td>
-															<td className="py-4 px-6">
-																{value.date}
-															</td>
-														</tr>
-													)
-												})
-											}
-										</tbody>
+										{
+											post.length > 0 ? 
+											<tbody>
+												{
+													post.map((value, key) => {
+														return(
+															<tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
+																<td className="py-4 px-6">
+																	{value.message}
+																</td>
+																<td className="py-4 px-6">
+																	{value.date}
+																</td>
+															</tr>
+														)
+													})
+												}
+											</tbody>
+											: <tbody>
+												<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
+													<td className="py-4 px-6">
+														No Messages
+													</td>
+												</tr>
+											</tbody>
+										}
 									</table>
 								</div>
 							</div>
@@ -269,10 +279,10 @@ const Home = () => {
 				</div>
 			);
 		} else {
-			return <div className="my-12 p-10">Unable to initiate auth!</div>;
+			return <div className="my-12 p-5">Unable to initiate auth!</div>;
 		}
 	}
-	return <div className="my-12 p-10">Redirecting...</div>;
+	return <div className="my-12 p-5">Redirecting...</div>;
 };
 
 export default Home;
