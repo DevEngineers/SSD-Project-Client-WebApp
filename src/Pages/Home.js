@@ -18,7 +18,7 @@ const Home = () => {
 	const [message, setMessage] = useState('');
 	const [date, setDate] = useState('');
 	const [file, setFile] = useState('');
-	const [post, setPost] = React.useState([]);
+	const [post, setPost] = useState([]);
 	const [keycloak, setKeycloak] = useState(null);
 	const [authenticated, setAuthenticated] = useState(false);
 	const [role, setRole] = useState('');
@@ -52,13 +52,12 @@ const Home = () => {
 	}, []);
 
 	const fetchData = async () => {
-		const data = await MessageService.getMessageByID(
-			localStorage.getItem('username'),
-		);
+		const data = await MessageService.getMessageByID(localStorage.getItem('username'));
 		if (data.length > 0) {
 			setPost(data);
 		}
 	};
+
 	const handleSubmit = async event => {
 		event.preventDefault();
 		let Message = {
@@ -76,6 +75,7 @@ const Home = () => {
 			if (role === 'worker') {
 				const res = await MessageService.storeMessageWorker(Message);
 				if (res.status === 200) {
+					fetchData();
 					toast.success(' Message Sent Successfully');
 				} else {
 					toast.error(Error('Something went wrong!! Try again.'));
@@ -88,6 +88,7 @@ const Home = () => {
 
 				const res = await MessageService.storeMessageManager(Message);
 				if (res.status === 200) {
+					fetchData();
 					toast.success(' Message Sent Successfully');
 				} else {
 					toast.error(Error('Something went wrong!! Try again.'));
@@ -152,7 +153,6 @@ const Home = () => {
 						</div>
 					</div>
 					<div className={'grid grid-cols-5 pt-5'}>
-						{/*Container 1*/}
 						<div className={'col-span-2 px-2'}>
 							<div
 								className={
@@ -224,7 +224,6 @@ const Home = () => {
 								</div>
 							</div>
 						</div>
-						{/*Container 2*/}
 						<div
 							className={
 								'col-span-3 px-2 overflow-auto  h-screen'
@@ -244,30 +243,34 @@ const Home = () => {
 													className="py-3 px-6">
 													Date
 												</th>
-												<th
-													scope="col"
-													className="py-3 px-6">
-													File
-												</th>
 											</tr>
 										</thead>
-										<tbody>
-											{post
-												? post
-												: [].map(post => (
-														<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
-															<td className="py-4 px-6">
-																{post.message}
-															</td>
-															<td className="py-4 px-6">
-																{post.date}
-															</td>
-															{/*<td className="py-4 px-6">*/}
-															{/*    {post.file}*/}
-															{/*</td>*/}
-														</tr>
-												  ))}
-										</tbody>
+										{
+											post.length > 0 ? 
+											<tbody>
+												{
+													post.map((value, key) => {
+														return(
+															<tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
+																<td className="py-4 px-6">
+																	{value.message}
+																</td>
+																<td className="py-4 px-6">
+																	{value.date}
+																</td>
+															</tr>
+														)
+													})
+												}
+											</tbody>
+											: <tbody>
+												<tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
+													<td className="py-4 px-6">
+														No Messages
+													</td>
+												</tr>
+											</tbody>
+										}
 									</table>
 								</div>
 							</div>
@@ -276,10 +279,10 @@ const Home = () => {
 				</div>
 			);
 		} else {
-			return <div className="my-12 p-10">Unable to initiate auth!</div>;
+			return <div className="my-12 p-5">Unable to initiate auth!</div>;
 		}
 	}
-	return <div className="my-12 p-10">Redirecting to Login...</div>;
+	return <div className="my-12 p-5">Redirecting...</div>;
 };
 
 export default Home;
