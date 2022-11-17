@@ -6,6 +6,7 @@ import headerLogo from '/src/Assets/Images/icons8-wechat-48.png';
 import MessageService from '../Services/MessageService';
 import Keycloak from 'keycloak-js';
 import keycloakData from '../../keycloak.json';
+import CryptoService from '../Services/CryptoService';
 
 const options = {
 	position: toast.POSITION.TOP_RIGHT,
@@ -62,7 +63,7 @@ const Home = () => {
 		event.preventDefault();
 		let Message = {
 			user: localStorage.getItem('username'),
-			message: message,
+			message: CryptoService.encryptData(message),
 			date: date,
 			fileLocation: '',
 		};
@@ -253,7 +254,7 @@ const Home = () => {
 														return(
 															<tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
 																<td className="py-4 px-6">
-																	{value.message}
+																	{CryptoService.decryptData(value.message)}
 																</td>
 																<td className="py-4 px-6">
 																	{value.date}

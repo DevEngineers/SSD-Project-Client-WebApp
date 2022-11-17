@@ -12,8 +12,10 @@
 	},
 	"dependencies": {
 		"@react-keycloak/web": "^3.4.0",
+		"file-saver": "^2.0.5",
 		"form-data": "^4.0.0",
 		"keycloak-js": "^20.0.0",
+		"node-rsa": "^1.1.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-router-dom": "^6.4.2",
