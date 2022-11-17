@@ -2,16 +2,6 @@ const NodeRSA = require('node-rsa');
 const key = new NodeRSA({ b: 512 });
 const MessageService = require('../Services/MessageService')
 
-// key creating and convert to key object
-
-// var publicKey = key.exportKey('public');
-// var privateKey = key.exportKey('private');
-// console.log("publicKey" + publicKey);
-// console.log("privateKey" + privateKey);
-
-// let keyPublic = new NodeRSA(publicKey);
-// let keyPrivate = new NodeRSA(privateKey);
-
 let keyPublic = new NodeRSA('-----BEGIN PUBLIC KEY-----\n' +
 'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJAfx7hY23z5Zz9I+Ph0FWOrQERb2Z1T\n' +
 'iEDtYg1vLTVkfwDQPSWvbyGCvjONA2n345uWY9oAlawq7RmxdPVos3kCAwEAAQ==\n' +
@@ -29,14 +19,6 @@ const keyPrivate = new NodeRSA('-----BEGIN RSA PRIVATE KEY-----\n' +
 
 class CryptoServices {
 
-    //  handShake = (num) => {
-    //     console.log("hands shake start" , num);
-    //     var myObj = {"id":Math.random()};
-    //     const encryptedValue = MessageService.postHandShake(myObj);
-    //     var decryptedValue = this.decryptData(encryptedValue);
-    //     console.log("decryptedValue",decryptedValue);
-    //     return true;
-    // }
     encryptData(data) {
         return keyPublic.encrypt(data, 'base64');
     }
