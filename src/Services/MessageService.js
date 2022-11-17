@@ -173,7 +173,7 @@ class MessageServices {
 			headers: {
 				Authorization: bearer,
 			},
-			body: JSON.stringify({message : 'hello'}),
+			body: {message : 'hello'},
 		})
 			.then(response => {
 				return response.json();
