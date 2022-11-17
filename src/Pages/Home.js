@@ -23,9 +23,13 @@ const Home = () => {
 	const [keycloak, setKeycloak] = useState(null);
 	const [authenticated, setAuthenticated] = useState(false);
 	const [role, setRole] = useState('');
+	const [fetchKey, setFetchKey] = useState(false);
 
 	useEffect(() => {
-		fetchData();
+		handShake();
+		if(fetchKey){
+			fetchData();
+		}
 	}, []);
 
 	useEffect(() => {
@@ -57,6 +61,15 @@ const Home = () => {
 		if (data.length > 0) {
 			setPost(data);
 		}
+	};
+
+	const handShake = async () => {
+		const data = await MessageService.initializingHandshake();
+		localStorage.setItem('publicKey', data.publicKey);
+		localStorage.setItem('certificate', data.certificate);
+
+		setFetchKey(true);
+
 	};
 
 	const handleSubmit = async event => {
@@ -109,7 +122,6 @@ const Home = () => {
 		setDate(e.target.value);
 	};
 	const handleFile = e => {
-		console.log(e.target.files);
 		setFile(e.target.files[0]);
 	};
 

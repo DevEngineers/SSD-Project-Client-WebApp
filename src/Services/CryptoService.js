@@ -1,20 +1,11 @@
 const NodeRSA = require('node-rsa');
-const key = new NodeRSA({ b: 512 });
+let key = new NodeRSA({ b: 512 });
+key.setOptions({encryptionScheme: 'pkcs1'});
+const dotenv = require('dotenv').config();
 const MessageService = require('../Services/MessageService')
 
-let keyPublic = new NodeRSA('-----BEGIN PUBLIC KEY-----\n' +
-'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJAfx7hY23z5Zz9I+Ph0FWOrQERb2Z1T\n' +
-'iEDtYg1vLTVkfwDQPSWvbyGCvjONA2n345uWY9oAlawq7RmxdPVos3kCAwEAAQ==\n' +
-'-----END PUBLIC KEY-----');
-const keyPrivate = new NodeRSA('-----BEGIN RSA PRIVATE KEY-----\n' +
-'MIIBOgIBAAJBAJAfx7hY23z5Zz9I+Ph0FWOrQERb2Z1TiEDtYg1vLTVkfwDQPSWv\n' +
-'byGCvjONA2n345uWY9oAlawq7RmxdPVos3kCAwEAAQJAfUjDCsNjeU4srFy44PG4\n' +
-'Lj4Nzd6yWwrkJNy2IcuFVyVBkHmlKUrnnnq0Cqdg6gsGn2kPeDE+zquEAxdzWSr4\n' +
-'iQIhAO3SVmSXjUaTONjyneN3C+3qi63xWW7x4wErq15hll23AiEAmyP7g8HDt4ty\n' +
-'f05PQz6DYcBktE2vBQIT/+M5PcSMeE8CIQCZqnEcKjikw3fV5l5SnZddsVFzoSDy\n' +
-'aOUO2pKuN0wbXQIgcLogk4hDsiZ9N8urBG10AZ9OjUS1G6p65cAxY5RhjTkCIGki\n' +
-'92D2VOkxzFHIVqGVYzU40O5mQ22tNqs5govxCstu\n' +
-'-----END RSA PRIVATE KEY-----');
+const keyPublic = new NodeRSA(process.env.PUBLIC_KEY);
+const keyPrivate = new NodeRSA(process.env.PRIVATE_KEY);
 
 
 class CryptoServices {

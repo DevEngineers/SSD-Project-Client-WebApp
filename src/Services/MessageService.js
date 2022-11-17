@@ -1,6 +1,8 @@
-const API_BASE_URI = 'http://localhost:8443/message';
 import CryptoService from "./CryptoService";
 import FileSaver from 'file-saver';
+
+const API_BASE_URI = 'http://localhost:8443/message';
+const API_BASE = 'http://localhost:8443/';
 
 class MessageServices {
 	/**
@@ -157,6 +159,24 @@ class MessageServices {
 		})
 			.then(response => {
 				return response;
+			})
+			.catch(reason => {
+				return reason;
+			});
+	}
+
+
+	async initializingHandshake() {
+		const bearer = 'bearer ' + localStorage.getItem('token');
+		return await fetch(API_BASE, {
+			method: 'POST',
+			headers: {
+				Authorization: bearer,
+			},
+			body: JSON.stringify({message : 'hello'}),
+		})
+			.then(response => {
+				return response.json();
 			})
 			.catch(reason => {
 				return reason;
