@@ -27,9 +27,8 @@ const Home = () => {
 
 	useEffect(() => {
 		handShake();
-		if(fetchKey){
-			fetchData();
-		}
+		fetchData();
+	
 	}, []);
 
 	useEffect(() => {
@@ -67,7 +66,6 @@ const Home = () => {
 		const data = await MessageService.initializingHandshake();
 		localStorage.setItem('publicKey', data.publicKey);
 		localStorage.setItem('certificate', data.certificate);
-
 		setFetchKey(true);
 
 	};
