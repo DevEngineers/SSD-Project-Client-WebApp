@@ -1,4 +1,8 @@
-const API_BASE_URI = 'http://localhost:5000/message';
+import CryptoService from "./CryptoService";
+import FileSaver from 'file-saver';
+
+const API_BASE_URI = 'http://localhost:8443/message';
+const API_BASE = 'http://localhost:8443/';
 
 class MessageServices {
 	/**
@@ -47,10 +51,27 @@ class MessageServices {
 	 *  This service function is to store files
 	 */
 	async FileUploads(file) {
+		
+		
+		var cipherText;
+		var reader = new FileReader();
+			reader.readAsText(file);
+			reader.onload = async () => {
+				await getCipherText(reader.result);
+			}
+			
+		let testValue;
+		const getCipherText = async (value) => {
+			testValue = value;
+		}
+
+		cipherText = CryptoService.encryptData(getCipherText());
+		let blobFile = new File ([cipherText], file.name, {type:"text/plain;charset=utf-8"});
+		//FileSaver.saveAs(blobFile);
 		const bearer = 'bearer ' + localStorage.getItem('token');
 		const form = new FormData();
 		form.append('name', file.name);
-		form.append('file', file);
+		form.append('file', blobFile);
 		return await fetch(API_BASE_URI + '/manager/file', {
 			method: 'POST',
 			headers: {
@@ -138,6 +159,24 @@ class MessageServices {
 		})
 			.then(response => {
 				return response;
+			})
+			.catch(reason => {
+				return reason;
+			});
+	}
+
+
+	async initializingHandshake() {
+		const bearer = 'bearer ' + localStorage.getItem('token');
+		return await fetch(API_BASE, {
+			method: 'POST',
+			headers: {
+				Authorization: bearer,
+			},
+			body: JSON.stringify({message : 'hello'}),
+		})
+			.then(response => {
+				return response.json();
 			})
 			.catch(reason => {
 				return reason;

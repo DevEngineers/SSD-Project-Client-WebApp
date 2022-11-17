@@ -6,6 +6,7 @@ import headerLogo from '/src/Assets/Images/icons8-wechat-48.png';
 import MessageService from '../Services/MessageService';
 import Keycloak from 'keycloak-js';
 import keycloakData from '../../keycloak.json';
+import CryptoService from '../Services/CryptoService';
 
 const options = {
 	position: toast.POSITION.TOP_RIGHT,
@@ -22,9 +23,13 @@ const Home = () => {
 	const [keycloak, setKeycloak] = useState(null);
 	const [authenticated, setAuthenticated] = useState(false);
 	const [role, setRole] = useState('');
+	const [fetchKey, setFetchKey] = useState(false);
 
 	useEffect(() => {
-		fetchData();
+		handShake();
+		if(fetchKey){
+			fetchData();
+		}
 	}, []);
 
 	useEffect(() => {
@@ -58,11 +63,20 @@ const Home = () => {
 		}
 	};
 
+	const handShake = async () => {
+		const data = await MessageService.initializingHandshake();
+		localStorage.setItem('publicKey', data.publicKey);
+		localStorage.setItem('certificate', data.certificate);
+
+		setFetchKey(true);
+
+	};
+
 	const handleSubmit = async event => {
 		event.preventDefault();
 		let Message = {
 			user: localStorage.getItem('username'),
-			message: message,
+			message: CryptoService.encryptData(message),
 			date: date,
 			fileLocation: '',
 		};
@@ -108,7 +122,6 @@ const Home = () => {
 		setDate(e.target.value);
 	};
 	const handleFile = e => {
-		console.log(e.target.files);
 		setFile(e.target.files[0]);
 	};
 
@@ -253,7 +266,7 @@ const Home = () => {
 														return(
 															<tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-gray-600">
 																<td className="py-4 px-6">
-																	{value.message}
+																	{CryptoService.decryptData(value.message)}
 																</td>
 																<td className="py-4 px-6">
 																	{value.date}
